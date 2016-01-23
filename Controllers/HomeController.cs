@@ -55,7 +55,6 @@ namespace AIS.Controllers
                 {
                     ViewBag.Message = "There was a problem sending the form, please try again or use another email address.";
                 }
-
             }
             return View();
         }
