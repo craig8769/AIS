@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    
+</head>
+<body>
+    <div class="page roundBig">
+        <div id="header">
+            <div id="title" class="round">
+                <h1>Anderson Internet Solutions</h1>
+                <img src="/images/ais_logo_grey.gif" alt="AIS" />
+            </div>
+            <div id="logindisplay">
+                @Html.Partial("_LoginPartial")
+            </div>
+            <div id="menucontainer" class="round roundT">
+                <ul id="menu">
+
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Support", "Support", "Home")</li>
+                </ul>
+            </div>
+        </div>
+        <div id="main" class="round roundB">
+            @RenderBody()
+
+        </div>
+        <footer>
+            <div id="footer">
+                <p class="copyright">&copy; @DateTime.Now.Year Anderson Internet Solutions</p>
+            </div>
+        </footer>
+</div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
