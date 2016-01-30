@@ -282,7 +282,7 @@ input.button-big {
 
 .form-control {
   display: block;
-  width: 400px;
+  width: 95%;
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
@@ -301,7 +301,7 @@ input.button-big {
 
 .form-control-multitxt {
   display: block;
-  width: 400px;
+  width: 95%;
   height: 200px;
   padding: 6px 12px;
   font-size: 14px;
