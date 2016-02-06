@@ -12,6 +12,8 @@ namespace AIS.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class AIS_Entities : DbContext
     {
@@ -25,5 +27,45 @@ namespace AIS.Models
             throw new UnintentionalCodeFirstException();
         }
     
+    
+        public virtual ObjectResult<get_Comments_ByPostID_Result> get_Comments_ByPostID(Nullable<int> post_ID)
+        {
+            var post_IDParameter = post_ID.HasValue ?
+                new ObjectParameter("post_ID", post_ID) :
+                new ObjectParameter("post_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Comments_ByPostID_Result>("get_Comments_ByPostID", post_IDParameter);
+        }
+    
+        public virtual ObjectResult<get_Post_ByID_Result> get_Post_ByID(Nullable<int> post_ID)
+        {
+            var post_IDParameter = post_ID.HasValue ?
+                new ObjectParameter("post_ID", post_ID) :
+                new ObjectParameter("post_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Post_ByID_Result>("get_Post_ByID", post_IDParameter);
+        }
+    
+        public virtual ObjectResult<get_Posts_Result> get_Posts()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Posts_Result>("get_Posts");
+        }
+    
+        public virtual int insert_Comment(Nullable<int> post_id, string user_id, string comment)
+        {
+            var post_idParameter = post_id.HasValue ?
+                new ObjectParameter("post_id", post_id) :
+                new ObjectParameter("post_id", typeof(int));
+    
+            var user_idParameter = user_id != null ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(string));
+    
+            var commentParameter = comment != null ?
+                new ObjectParameter("Comment", comment) :
+                new ObjectParameter("Comment", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_Comment", post_idParameter, user_idParameter, commentParameter);
+        }
     }
 }

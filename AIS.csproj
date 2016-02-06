@@ -253,6 +253,15 @@
       <DependentUpon>AISModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="Models\get_Comments_ByPostID_Result.cs">
+      <DependentUpon>AISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\get_Posts_Result.cs">
+      <DependentUpon>AISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\get_Post_ByID_Result.cs">
+      <DependentUpon>AISModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

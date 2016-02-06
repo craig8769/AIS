@@ -4,20 +4,120 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="aspnetdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="aspnetdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="get_Comments_ByPostID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="post_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_Post_ByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="post_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_Posts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="insert_Comment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="post_id" Type="int" Mode="In" />
+          <Parameter Name="user_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="Comment" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <EntityContainer Name="aspnetdbModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="aspnetdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="AIS_Entities" annotation:LazyLoadingEnabled="true" />
+        <EntityContainer Name="AIS_Entities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="get_Comments_ByPostID" ReturnType="Collection(aspnetdbModel.get_Comments_ByPostID_Result)">
+            <Parameter Name="post_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_Post_ByID" ReturnType="Collection(aspnetdbModel.get_Post_ByID_Result)">
+            <Parameter Name="post_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_Posts" ReturnType="Collection(aspnetdbModel.get_Posts_Result)" />
+          <FunctionImport Name="insert_Comment">
+            <Parameter Name="post_id" Mode="In" Type="Int32" />
+            <Parameter Name="user_id" Mode="In" Type="String" />
+            <Parameter Name="Comment" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="get_Comments_ByPostID_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="Post_id" Nullable="false" />
+          <Property Type="String" Name="User_id" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="Comment" Nullable="false" />
+          <Property Type="DateTime" Name="Created" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="get_Post_ByID_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="ShortDescription" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Meta" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="UrlSlug" Nullable="false" MaxLength="1000" />
+          <Property Type="Boolean" Name="Published" Nullable="false" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastModified" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CategoryId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_Posts_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="ShortDescription" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Meta" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="UrlSlug" Nullable="false" MaxLength="1000" />
+          <Property Type="Boolean" Name="Published" Nullable="false" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="LastModified" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CategoryId" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="aspnetdbModelStoreContainer" CdmEntityContainer="AIS_Entities" />
+        <EntityContainerMapping StorageEntityContainer="aspnetdbModelStoreContainer" CdmEntityContainer="AIS_Entities" >
+          <FunctionImportMapping FunctionImportName="get_Comments_ByPostID" FunctionName="aspnetdbModel.Store.get_Comments_ByPostID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="aspnetdbModel.get_Comments_ByPostID_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Post_id" ColumnName="Post_id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_Post_ByID" FunctionName="aspnetdbModel.Store.get_Post_ByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="aspnetdbModel.get_Post_ByID_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+                <ScalarProperty Name="UrlSlug" ColumnName="UrlSlug" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="PostedOn" ColumnName="PostedOn" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_Posts" FunctionName="aspnetdbModel.Store.get_Posts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="aspnetdbModel.get_Posts_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+                <ScalarProperty Name="UrlSlug" ColumnName="UrlSlug" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="PostedOn" ColumnName="PostedOn" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="insert_Comment" FunctionName="aspnetdbModel.Store.insert_Comment" />
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
