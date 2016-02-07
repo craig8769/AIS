@@ -67,5 +67,9 @@ namespace AIS.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_Comment", post_idParameter, user_idParameter, commentParameter);
         }
+
+        public System.Data.Entity.DbSet<AIS.Models.get_Posts_Result> get_Posts_Result { get; set; }
+
+        public System.Data.Entity.DbSet<AIS.Models.get_Post_ByID_Result> get_Post_ByID_Result { get; set; }
     }
 }

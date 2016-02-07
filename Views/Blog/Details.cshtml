@@ -1,0 +1,14 @@
+﻿@model AIS.Models.get_Post_ByID_Result
+
+    <div>
+        <h3>@Html.Raw(HttpUtility.HtmlDecode(Model.Title))</h3>
+        <hr />
+        <p>@Html.Raw(HttpUtility.HtmlDecode(Model.Description))</p>
+        <p>
+            @Html.Raw(HttpUtility.HtmlDecode(Model.Meta)) <br />
+            Posted: @Html.Raw(HttpUtility.HtmlDecode(Model.PostedOn.ToLongDateString()))
+        </p>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
