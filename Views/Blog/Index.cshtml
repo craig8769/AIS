@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<AIS.Models.get_Posts_Result>
 @foreach (var item in Model)
 {
-    <h1>@Html.Raw(HttpUtility.HtmlDecode(item.Title))</h1>
+    <h3>@Html.Raw(HttpUtility.HtmlDecode(item.Title))</h3>
+    
+        @Html.Raw(HttpUtility.HtmlDecode(item.ShortDescription))
     <p>
-        @Html.Raw(HttpUtility.HtmlDecode(item.ShortDescription))<br />
         @Html.Raw(HttpUtility.HtmlDecode(item.Meta))<br />
         @Html.Raw(HttpUtility.HtmlDecode(item.UrlSlug))<br />
         @Html.Raw(HttpUtility.HtmlDecode(item.LastModified.ToString()))<br />
